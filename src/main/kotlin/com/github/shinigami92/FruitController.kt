@@ -1,5 +1,6 @@
 package com.github.shinigami92.fruits
 
+import com.github.shinigami92.others.Other
 import io.smallrye.mutiny.Uni
 import org.jboss.logging.Logger
 import org.jboss.resteasy.reactive.ResponseStatus
@@ -20,7 +21,7 @@ import javax.ws.rs.core.MediaType
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @ApplicationScoped
-class FruitController {
+class FruitController(var fruitService: FruitService) {
 
     @Inject
     lateinit var logger: Logger
@@ -43,5 +44,11 @@ class FruitController {
         }
 
         return Uni.createFrom().item(fruit)
+    }
+
+    @GET
+    @Path("/other")
+    fun other(): Other {
+        return fruitService.other()
     }
 }
